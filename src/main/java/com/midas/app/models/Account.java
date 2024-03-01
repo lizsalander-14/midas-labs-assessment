@@ -14,6 +14,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Builder
 @Entity
 @Table(name = "accounts")
+@ToString
 public class Account {
   @Id
   @Column(name = "id")

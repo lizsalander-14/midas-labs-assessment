@@ -23,6 +23,42 @@ components:
 paths:
   /accounts:
     $ref: "./accounts/paths/accounts.yml"
+  /accounts/{accountId}:
+    put:
+      summary: Update firstName, lastName and email of an account
+      operationId: updateUserAccount
+      description: Updates account details for given accountId
+      tags:
+        - Accounts
+      parameters:
+        - name: accountId
+          description: accountId of user to be updated
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        description: User account details
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "./accounts/schemas.yml#/components/schemas/account"
+      responses:
+        "200":
+          description: Updated user account details
+          content:
+            application/json:
+              schema:
+                $ref: "./accounts/schemas.yml#/components/schemas/account"
+        "400":
+          $ref: "./common/responses.yml#/components/responses/badRequest"
+        "401":
+          $ref: "./common/responses.yml#/components/responses/unauthorized"
+        "403":
+          $ref: "./common/responses.yml#/components/responses/forbidden"
+        "500":
+          $ref: "./common/responses.yml#/components/responses/internalServerError"
 
 security:
   - bearerAuth: [ ]
