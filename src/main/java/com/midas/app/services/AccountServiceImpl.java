@@ -6,6 +6,7 @@ import com.midas.app.workflows.CreateAccountWorkflow;
 import io.temporal.client.WorkflowClient;
 import io.temporal.client.WorkflowOptions;
 import io.temporal.workflow.Workflow;
+import java.time.Duration;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -32,6 +33,8 @@ public class AccountServiceImpl implements AccountService {
         WorkflowOptions.newBuilder()
             .setTaskQueue(CreateAccountWorkflow.QUEUE_NAME)
             .setWorkflowId(details.getEmail())
+            .setWorkflowRunTimeout(Duration.ofMinutes(10))
+            .setWorkflowTaskTimeout(Duration.ofMinutes(5))
             .build();
 
     logger.info("initiating workflow to create account for email: {}", details.getEmail());
